@@ -1,7 +1,7 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-<title>Product Search</title>
+<title>The Vitamin Shoppe Search</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -12,7 +12,7 @@
 <body>
 
 <div class="card mb-3" style="max-width: 540px;">
-<p class="text-info">Search Products</p>
+<p class="text-info">Search </p>
 <span class="border border-info">
 	<div class="input-group mb-3">
 	  <input type="text" class="form-control" placeholder="Search Product by Name or description" aria-label="Product Name" aria-describedby="btnNameSearch" id="productNamedesc">
@@ -47,7 +47,7 @@
         $("#btnNameSearch").click(function(){
           var inputText = $("#productNamedesc").val();
           if(inputText.length == 0) {
-             alert("Enter product name or description");
+             alert("Enter  name or description");
           }else{
              var response = '';
 	         $.ajax({
@@ -62,8 +62,21 @@
                     }else{
                        strHTML = "<p class='text-success'>"+len + " matches found.</p>";
                        strHTML += "<ul class='list-unstyled'>";
-                       for(var i=0; i<len; i++){                    
-                         strHTML += "<li>"+resp[i].name+"</li>";
+                       for(var i=0; i<len; i++){   
+	                      if(resp[i].sku_id != null){
+	                      strHTML += "<li>"+resp[i].sku_id+" "+resp[i].sku_description+"</li>";
+	                      }  
+	                      else if (resp[i].first_name == "store"){
+	                      	
+	                         strHTML += "<li>"+resp[i].email_address+"</li>";
+	                         strHTML += "<li>"+resp[i].full_name+"</li>";
+	                        
+	                      } else {             
+	                         strHTML += "<li>"+resp[i].full_name+"</li>";
+	                          strHTML += "<li>"+resp[i].first_name+"</li>";
+	                          strHTML += "<li>"+resp[i].last_name+"</li>";
+	                         }
+	                         
                        }
                        strHTML = strHTML + "</ul>";
                        $("#results").html(strHTML)

@@ -29,6 +29,8 @@ import org.springframework.data.elasticsearch.core.query.StringQuery;
 import org.springframework.stereotype.Service;
 
 import io.pratik.elasticsearch.models.Product;
+import io.pratik.elasticsearch.models.ResultAggregator;
+import io.pratik.elasticsearch.models.Sku;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -39,6 +41,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ProductSearchService {
 
 	private static final String PRODUCT_INDEX = "productindex";
+	private static final String SKU_INDEX = "skuindex";
+	private static final String EMP_INDEX = "empindex";
 
 	private ElasticsearchOperations elasticsearchOperations;
 
@@ -137,6 +141,34 @@ public class ProductSearchService {
 		});
 		return productMatches;
 	}
+	
+	
+	public List<ResultAggregator> processSearchNew(final String query) {
+		log.info("Search with query {}", query);
+		
+		// 1. Create query on multiple fields enabling fuzzy search
+		QueryBuilder queryBuilder = 
+				QueryBuilders
+				.multiMatchQuery(query,"sku_id","sku_description","name","first_name","email_address");
+				//.fuzziness(Fuzziness.AUTO);
+
+		Query searchQuery = new NativeSearchQueryBuilder().withFilter(queryBuilder).build();
+				
+
+		// 2. Execute search
+		SearchHits<ResultAggregator> productHits = 
+				elasticsearchOperations
+				.search(searchQuery, ResultAggregator.class,
+				IndexCoordinates.of(SKU_INDEX,PRODUCT_INDEX,EMP_INDEX));
+
+		// 3. Map searchHits to product list
+		List<ResultAggregator> productMatches = new ArrayList<ResultAggregator>();
+		productHits.forEach(srchHit->{
+			productMatches.add(srchHit.getContent());
+		});
+		return productMatches;
+	}
+	
 
 	
 
@@ -162,5 +194,7 @@ public class ProductSearchService {
 		});
 		return suggestions;
 	}
+	
+   
 
 }

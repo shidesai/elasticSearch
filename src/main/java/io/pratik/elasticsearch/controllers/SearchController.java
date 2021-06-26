@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.pratik.elasticsearch.models.Product;
+import io.pratik.elasticsearch.models.ResultAggregator;
+import io.pratik.elasticsearch.models.Sku;
 import io.pratik.elasticsearch.services.ProductSearchService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,9 +40,9 @@ public class SearchController {
 	
 	@GetMapping("/products")
 	@ResponseBody
-	public List<Product> fetchByNameOrDesc(@RequestParam(value = "q", required = false) String query) {                         
+	public List<ResultAggregator> fetchByNameOrDesc(@RequestParam(value = "q", required = false) String query) {                         
         log.info("searching by name {}",query);
-		List<Product> products = searchService.processSearch(query) ;
+		List<ResultAggregator> products = searchService.processSearchNew(query) ;
 	    log.info("products {}",products);
 		return products;
 	  }

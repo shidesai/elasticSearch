@@ -67,7 +67,7 @@ public class SearchController {
         return suggests;
       }
 	
-	@GetMapping("/employee")
+	@GetMapping("/employees")
     @ResponseBody
     public List<Employee> fetchEmployee(@RequestParam(value = "q", required = false) String query) {                        
         log.info("fetch suggests {}",query);

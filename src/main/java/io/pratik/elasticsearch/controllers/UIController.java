@@ -61,5 +61,15 @@ public class UIController {
 
         return "searchResultStore";
     }
+	@GetMapping("/employee")
+    public String searchEmployee(Model model,@RequestParam(value = "q", required = false) String query) {
+		  log.info("searchEmployee {}",query);
+			/*
+			 * log.info("fetch suggests {}",query); List<Store> suggests =
+			 * searchService.findByStore(query); log.info("suggests {}",suggests);
+			 */
+
+        return "employee";
+    }
  
 }

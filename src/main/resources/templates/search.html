@@ -11,11 +11,11 @@
 </head>
 <body>
 
-<div class="card mb-3" style="max-width: 540px;">
-<p class="text-info">Search </p>
-<span class="border border-info">
+<div class="card mb-3" style="max-width: 540px;border:0px;margin-left:30px;margin-top:30px">
+<p class="text-info"><b>SearchTVS<sup>TM</sup></b> </p>
+<span class="border-info">
 	<div class="input-group mb-3">
-	  <input type="text" class="form-control" placeholder="Search Product by Name or description" aria-label="Product Name" aria-describedby="btnNameSearch" id="productNamedesc">
+	  <input type="text" class="form-control" placeholder="Search TVS" aria-label="Product Name" aria-describedby="btnNameSearch" id="productNamedesc">
 	  <div class="input-group-append">
 	    <button class="btn btn-outline-secondary" type="button" id="btnNameSearch">Search</button>
 	  </div>
@@ -23,7 +23,7 @@
 </span>
 </div>
 
-<div id="results" class="card"></div>
+<div id="results" class="card" style="border:0px;margin-left:30px;"></div>
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="   crossorigin="anonymous"></script>
@@ -46,6 +46,9 @@
     
         $("#btnNameSearch").click(function(){
           var inputText = $("#productNamedesc").val();
+          var skus = [];
+          var stores=[];
+          var employees=[];
           if(inputText.length == 0) {
              alert("Enter  name or description");
           }else{
@@ -56,30 +59,63 @@
 	            async: true,
 	            success: function(resp) {
 	                var len = resp.length;
-	                var strHtml = "";                    
+	                var skuHtml = "";
+					var storesHtml = "";      
+					var employeesHtml = "";      
                     if(len == 0) {
                       $("#results").html("<p class='text-danger'>Zero matches</p>");
                     }else{
                        strHTML = "<p class='text-success'>"+len + " matches found.</p>";
-                       strHTML += "<ul class='list-unstyled'>";
+                      // strHTML += "<ul class='list-unstyled'>";
                        for(var i=0; i<len; i++){   
 	                      if(resp[i].sku_id != null){
-	                      strHTML += "<li>"+resp[i].sku_id+" "+resp[i].sku_description+"</li>";
+	                      skuHtml += "<li>"+resp[i].sku_id+" "+resp[i].sku_description+"</li>";
+	                      skus.push(skuHtml);
 	                      }  
-	                      else if (resp[i].first_name == "store"){
+	                      else if (resp[i].first_name!=null && resp[i].first_name.toLowerCase() == "store"){
 	                      	
-	                         strHTML += "<li>"+resp[i].email_address+"</li>";
-	                         strHTML += "<li>"+resp[i].full_name+"</li>";
+	                         storesHtml += "<li> "+resp[i].full_name+" <b>Store email:</b> "+resp[i].email_address+"</li>";
+	                       //  storesHtml += "<li>"+resp[i].full_name+"</li>";
+	                          stores.push(storesHtml);
 	                        
 	                      } else {             
-	                         strHTML += "<li>"+resp[i].full_name+"</li>";
-	                          strHTML += "<li>"+resp[i].first_name+"</li>";
-	                          strHTML += "<li>"+resp[i].last_name+"</li>";
+	                         employeesHtml += "<li>"+resp[i].full_name+" "+resp[i].email_address+"</li>";
+	                        //  employeesHtml += "<li>"+resp[i].first_name+"</li>";
+	                          //employeesHtml += "<li>"+resp[i].last_name+"</li>";
+	                          employees.push(employeesHtml);
 	                         }
 	                         
                        }
-                       strHTML = strHTML + "</ul>";
-                       $("#results").html(strHTML)
+                       var skusHeader;
+                       var  storesHeader;
+                       var employeesHeader;
+                       if(skus!= null && skus.length>0){
+						skusHeader="<p style=\"color:blue\"><b> Products: "+skus.length+"</b></p>"
+						skusHeader += "<ul class='list-unstyled'>";
+						skusHeader = skusHeader+skuHtml + "</ul>";
+					  }
+					   if(stores!=null && stores.length>0){
+						storesHeader="<p style=\"color:blue\"><b> VSI Stores: "+stores.length+"</b></p>"
+						storesHeader += "<ul class='list-unstyled'>";
+						storesHeader = storesHeader+storesHtml + "</ul>";
+					  }
+					  if(employees!=null && employees.length>0){
+						employeesHeader="<p style=\"color:blue\"><b> Employees: "+employees.length+"</b></p>"
+						employeesHeader += "<ul class='list-unstyled'>";
+						employeesHeader =employeesHeader+ employeesHtml + "</ul>";
+					  }
+                      // strHTML = strHTML + "</ul>";
+                      var finalHTML=strHTML;
+                      if(skusHeader!=null){
+							finalHTML+=skusHeader;
+						}
+						if(storesHeader!=null){
+							finalHTML+=storesHeader;
+						}
+						if(employeesHeader!=null){
+							finalHTML+=employeesHeader;
+						}
+                       $("#results").html(finalHTML)
                     }
 	            }
 	        });           

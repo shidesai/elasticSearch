@@ -83,7 +83,7 @@ public class ProductsearchappApplication {
 	
 	private Collection<Sku> prepareSkuDataset(){
 
-		Resource resource = new ClassPathResource("sku_info_new.csv");
+		Resource resource = new ClassPathResource("sku_info_latest.csv");
 		List<Sku> skuList = new ArrayList<Sku>();
 
 		try (
@@ -237,13 +237,15 @@ public class ProductsearchappApplication {
 				String description = rowScanner.next();	
 				String brand = rowScanner.next();
 				String subclass = rowScanner.next();	
-				String category = rowScanner.next();	
+				String category = rowScanner.next();
+				String atgSkuId = rowScanner.next();	
 				return Optional.of(
 						Sku.builder()						
 						.description(description)
 						.skuId(skuId)
 						.brand(brand)
 						.subclass(subclass).category(category)
+						.atgSkuId(atgSkuId)
 						.build());
 
 			}

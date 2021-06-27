@@ -43,6 +43,7 @@ public class ProductSearchService {
 	private static final String PRODUCT_INDEX = "productindex";
 	private static final String SKU_INDEX = "skuindex";
 	private static final String EMP_INDEX = "empindex";
+	private static final String STORE_INDEX="storeindex";
 
 	private ElasticsearchOperations elasticsearchOperations;
 
@@ -149,7 +150,7 @@ public class ProductSearchService {
 		// 1. Create query on multiple fields enabling fuzzy search
 		QueryBuilder queryBuilder = 
 				QueryBuilders
-				.multiMatchQuery(query,"sku_id","sku_description","name","first_name","email_address");
+				.multiMatchQuery(query,"sku_id","sku_description","name","first_name","email_address","store");
 				//.fuzziness(Fuzziness.AUTO);
 
 		Query searchQuery = new NativeSearchQueryBuilder().withFilter(queryBuilder).build();
@@ -159,7 +160,7 @@ public class ProductSearchService {
 		SearchHits<ResultAggregator> productHits = 
 				elasticsearchOperations
 				.search(searchQuery, ResultAggregator.class,
-				IndexCoordinates.of(SKU_INDEX,PRODUCT_INDEX,EMP_INDEX));
+				IndexCoordinates.of(SKU_INDEX,PRODUCT_INDEX,EMP_INDEX,STORE_INDEX));
 
 		// 3. Map searchHits to product list
 		List<ResultAggregator> productMatches = new ArrayList<ResultAggregator>();

@@ -129,6 +129,97 @@ public class ResultAggregator {
 	
 	private String telephone_number;
 	
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getDm() {
+		return dm;
+	}
+
+	public void setDm(String dm) {
+		this.dm = dm;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+	public String getStore() {
+		return store;
+	}
+
+	public void setStore(String store) {
+		this.store = store;
+	}
+
+	public String getStore_name() {
+		return store_name;
+	}
+
+	public void setStore_name(String store_name) {
+		this.store_name = store_name;
+	}
+
+	public String getStreet_address() {
+		return street_address;
+	}
+
+	public void setStreet_address(String street_address) {
+		this.street_address = street_address;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getHours() {
+		return hours;
+	}
+
+	public void setHours(String hours) {
+		this.hours = hours;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+
+	private String region;
+	private String dm;;
+	private String district;
+	private String store;
+	private String store_name;
+	private String street_address;
+	private String state;
+	private String phone;
+	private String hours;
+	private String fax;
+	
 	public String getFirst_name() {
 		return first_name;
 	}
@@ -160,8 +251,9 @@ public class ResultAggregator {
 	private String name;
     private String sku_description;
     
-
-    ResultAggregator(String sku_id, String name, String sku_description,String first_name,String email_address,String last_name,String full_name,String title, String department,String manager,String description,String office,String city,String zip_code,String state_province,String telephone_number) {
+  //  REGION,DM,DISTRICT,STORE,STORE_NAME,STREET_ADDRESS,CITY,STATE,ZIP_CODE,PHONE,FAX,HOURS
+    ResultAggregator(String sku_id, String name, String sku_description,String first_name,String email_address,String last_name,String full_name,String title, String department,String manager,String description,String office,String city,String zip_code,String state_province,String telephone_number,
+    	String region,String dm,String district,String store,String store_name,String street_address,String state, String phone, String hours, String fax ) {
         this.setSku_id(sku_id);
         this.name = name;
         this.setSku_description(sku_description);
@@ -178,6 +270,16 @@ public class ResultAggregator {
         this.setZip_code(zip_code);
         this.setState_province(state_province);
         this.setTelephone_number(telephone_number);
+        this.setRegion(region);
+        this.setDm(dm);
+        this.setDistrict(district);
+        this.setStore(store_name);
+        this.setStore_name(store_name);
+        this.setStreet_address(street_address);
+        this.setState(state);
+        this.setPhone(phone);
+        this.setFax(fax);
+        this.setHours(hours);
     }
 
 	public String getSku_description() {

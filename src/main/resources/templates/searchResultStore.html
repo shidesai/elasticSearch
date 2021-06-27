@@ -45,12 +45,12 @@ function getUrlVars()
        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('=');
        
     
-       alert('results');
-       alert('req:'+hashes[1]);
+      // alert('results');
+      // alert('req:'+hashes[1]);
              var response = '';
 	         $.ajax({
 	            type: "GET",
-	            url: "http://localhost:8080/store?q="+22,
+	            url: "http://localhost:8080/store?q="+hashes[1],
 	            async: true,
 	            success: function(resp) {
 	                var len = resp.length;

@@ -15,9 +15,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.pratik.elasticsearch.models.Product;
+import io.pratik.elasticsearch.models.Store;
 import io.pratik.elasticsearch.services.SearchService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,6 +49,17 @@ public class UIController {
 		log.info("product names {}", names);
         model.addAttribute("names", names);
         return "search";
+    }
+	
+	@GetMapping("/searchResultStore")
+    public String searchResultStore(Model model,@RequestParam(value = "q", required = false) String query) {
+		  log.info("searchResultStore {}",query);
+			/*
+			 * log.info("fetch suggests {}",query); List<Store> suggests =
+			 * searchService.findByStore(query); log.info("suggests {}",suggests);
+			 */
+
+        return "searchResultStore";
     }
  
 }

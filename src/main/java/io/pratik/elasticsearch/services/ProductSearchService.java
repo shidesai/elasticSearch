@@ -10,8 +10,6 @@ import java.util.stream.Collectors;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.aggregations.Aggregation;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
@@ -36,6 +34,7 @@ import io.pratik.elasticsearch.models.Store;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 
  * @author Pratik Das
  */
 @Service
@@ -65,7 +64,7 @@ public class ProductSearchService {
 		return elasticsearchOperations.bulkIndex(queries, IndexCoordinates.of(PRODUCT_INDEX));
 
 	}
-
+	
 	public String createProductIndex(Product product) {
 
 		IndexQuery indexQuery = new IndexQueryBuilder().withId(product.getId().toString()).withObject(product).build();
@@ -145,6 +144,34 @@ public class ProductSearchService {
 		return productMatches;
 	}
 	
+	public List<Store> findByStore(final String query){
+		log.info("Search with query {}", query);
+		
+		// 1. Create query on multiple fields enabling fuzzy search
+		QueryBuilder queryBuilder = 
+				QueryBuilders
+				.matchQuery("store", query)
+				.fuzziness(Fuzziness.AUTO);
+
+		Query searchQuery = new NativeSearchQueryBuilder()
+				                .withFilter(queryBuilder)
+				                .build();
+		// CReate a search Source
+				
+		// 2. Execute search
+				SearchHits<Store> productHits = 
+						elasticsearchOperations
+						.search(searchQuery, Store.class,
+						IndexCoordinates.of(STORE_INDEX));
+
+				// 3. Map searchHits to product list
+				List<Store> productMatches = new ArrayList<Store>();
+				productHits.forEach(srchHit->{
+					productMatches.add(srchHit.getContent());					
+				});
+				return productMatches;
+		
+	}
 	
 	public List<ResultAggregator> processSearchNew(final String query) {
 		log.info("Search with query {}", query);
@@ -196,8 +223,9 @@ public class ProductSearchService {
 		
 		searchSuggestions.getSearchHits().forEach(searchHit->{
 			suggestions.add(searchHit.getContent().getDescription());
+			suggestions.add(searchHit.getContent().getSkuId());
 		});
-		
+		//Employee
 		QueryBuilder queryBuilder_emp = QueryBuilders
 				.wildcardQuery("full_name", query+"*").caseInsensitive(true);
 
@@ -212,6 +240,7 @@ public class ProductSearchService {
 				IndexCoordinates.of(EMP_INDEX));
 		searchSuggestions_emp.getSearchHits().forEach(searchHit->{
 			suggestions.add(searchHit.getContent().getFullName());
+			suggestions.add(searchHit.getContent().getEmailAddress());
 		});
 		
 		QueryBuilder queryBuilder_str = QueryBuilders

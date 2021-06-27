@@ -59,6 +59,7 @@ public class ResultAggregator {
     private String sku_description;
     private String email_address;
     private String jda_sku_id;
+    private String url;
   //BRAND,SUBCLASS,CATEGORY
   //  REGION,DM,DISTRICT,STORE,STORE_NAME,STREET_ADDRESS,CITY,STATE,ZIP_CODE,PHONE,FAX,HOURS
     

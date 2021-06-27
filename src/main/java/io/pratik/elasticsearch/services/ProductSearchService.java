@@ -181,7 +181,7 @@ public class ProductSearchService {
 		// 1. Create query on multiple fields enabling fuzzy search
 		QueryBuilder queryBuilder = 
 				QueryBuilders
-				.multiMatchQuery(query,"sku_id","sku_description","name","full_name","email_address","store","state","dm");
+				.multiMatchQuery(query,"sku_id","sku_description","name","full_name","email_address","store","state","dm","brand","subclass","category","title","zip_code","first_name","last_name","description","city","title","department","telephone_number");
 				//.fuzziness(Fuzziness.AUTO);
 
 		Query searchQuery = new NativeSearchQueryBuilder().withFilter(queryBuilder).build();

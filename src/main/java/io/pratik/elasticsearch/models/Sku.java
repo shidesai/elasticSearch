@@ -23,16 +23,16 @@ public class Sku {
 	@Field(type = FieldType.Keyword, name = "sku_id")
 	private String skuId;
 	
-	@Field(type = FieldType.Keyword, name = "sku_description")
+	@Field(type = FieldType.Text, name = "sku_description")
 	private String description;
 	
-	@Field(type = FieldType.Keyword, name = "brand")
+	@Field(type = FieldType.Text, name = "brand")
 	private String brand;
 
 	@Field(type = FieldType.Keyword, name = "subclass")
 	private String subclass;
 
-	@Field(type = FieldType.Keyword, name = "category")
+	@Field(type = FieldType.Text, name = "category")
 	private String category;
 
 	

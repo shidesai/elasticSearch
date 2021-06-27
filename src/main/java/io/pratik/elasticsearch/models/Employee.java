@@ -24,13 +24,13 @@ public class Employee {
 	@Field(type = FieldType.Keyword, name = "serial_no")
 	private String serialNo;
 	
-	@Field(type = FieldType.Keyword, name = "first_name")
+	@Field(type = FieldType.Text, name = "first_name")
 	private String firstName;
 	
-	@Field(type = FieldType.Keyword, name = "last_name")
+	@Field(type = FieldType.Text, name = "last_name")
 	private String lastName;
 	
-	@Field(type = FieldType.Keyword, name = "full_name")
+	@Field(type = FieldType.Text, name = "full_name")
 	private String fullName;
 	
 	@Field(type = FieldType.Keyword, name = "title")
@@ -48,19 +48,19 @@ public class Employee {
 	@Field(type = FieldType.Keyword, name = "role")
 	private String role;
 	
-	@Field(type = FieldType.Keyword, name = "email_address")
+	@Field(type = FieldType.Text, name = "email_address")
 	private String emailAddress;
 	
 	@Field(type = FieldType.Keyword, name = "office")
 	private String office;
 	
-	@Field(type = FieldType.Keyword, name = "city")
+	@Field(type = FieldType.Text, name = "city")
 	private String city;
 	
 	@Field(type = FieldType.Keyword, name = "zip_code")
 	private String zipCode;
 	
-	@Field(type = FieldType.Keyword, name = "state_province")
+	@Field(type = FieldType.Text, name = "state_province")
 	private String stateProvince;
 	
 	@Field(type = FieldType.Keyword, name = "telephone_number")

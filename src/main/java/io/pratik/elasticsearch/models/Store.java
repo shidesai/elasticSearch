@@ -22,7 +22,7 @@ public class Store {
 	
 	@Field(type = FieldType.Keyword, name = "region")
 	private String region;
-	@Field(type = FieldType.Keyword, name = "dm")
+	@Field(type = FieldType.Text, name = "dm")
 	private String dm;	
 	@Field(type = FieldType.Keyword, name = "district")
 	private String district;
@@ -33,9 +33,9 @@ public class Store {
 	private String store_name;
 	@Field(type = FieldType.Keyword, name = "street_address")
 	private String street_address;
-	@Field(type = FieldType.Keyword, name = "city")
+	@Field(type = FieldType.Text, name = "city")
 	private String city;
-	@Field(type = FieldType.Keyword, name = "state")
+	@Field(type = FieldType.Text, name = "state")
 	private String state;
 	@Field(type = FieldType.Keyword, name = "zip_code")
 	private String zip_code;

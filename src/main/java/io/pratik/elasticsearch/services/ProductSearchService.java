@@ -150,8 +150,8 @@ public class ProductSearchService {
 		// 1. Create query on multiple fields enabling fuzzy search
 		QueryBuilder queryBuilder = 
 				QueryBuilders
-				.matchQuery("store", query)
-				.fuzziness(Fuzziness.AUTO);
+				.matchQuery("store", query);
+				//.fuzziness(Fuzziness.AUTO);
 
 		Query searchQuery = new NativeSearchQueryBuilder()
 				                .withFilter(queryBuilder)

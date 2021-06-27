@@ -69,7 +69,8 @@
                       // strHTML += "<ul class='list-unstyled'>";
                        for(var i=0; i<len; i++){   
 	                      if(resp[i].sku_id != null){
-	                      skuHtml += "<li>"+resp[i].sku_id+" "+resp[i].sku_description+"</li>";
+							var docId=resp[i].url;   
+	                      skuHtml += "<li><a href=\"javascript:skuDetails('"+docId+"');\">"+resp[i].sku_id+" "+resp[i].sku_description+"</li>";
 	                      skus.push(skuHtml);
 	                      }  
 	                      else if (resp[i].store!=null ){
@@ -79,8 +80,13 @@
 	                       //  storesHtml += "<li>"+resp[i].full_name+"</li>";
 	                          stores.push(storesHtml);
 	                        
-	                      } else {             
-	                         employeesHtml += "<li>"+resp[i].full_name+" "+resp[i].email_address+"</li>";
+	                      } else {    
+							var email="";
+							if(resp[i].title !=null){
+								email = resp[i].title;
+							}     
+							var docId=resp[i].serial_no;    
+	                         employeesHtml += "<li><a href=\"javascript:employeeDetails('"+docId+"');\">"+resp[i].full_name+", "+email+"</li>";
 	                        //  employeesHtml += "<li>"+resp[i].first_name+"</li>";
 	                          //employeesHtml += "<li>"+resp[i].last_name+"</li>";
 	                          employees.push(employeesHtml);
@@ -150,6 +156,14 @@
 	            }
 	        });     */      
           window.location.href="http://localhost:8080/searchResultStore?q="+respId;
+}
+function employeeDetails(respId){
+	       
+          window.location.href="http://localhost:8080/employee?q="+respId;
+}
+function skuDetails(respId){
+	       
+          window.location.href="https://www.vitaminshoppe.com/"+respId;
 }
 </script>
 

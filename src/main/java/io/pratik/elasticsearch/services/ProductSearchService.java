@@ -173,6 +173,36 @@ public class ProductSearchService {
 		
 	}
 	
+	public List<Employee> findByEmployee(final String query){
+		log.info("Search with query {}", query);
+		
+		// 1. Create query on multiple fields enabling fuzzy search
+		QueryBuilder queryBuilder = 
+				QueryBuilders
+				.matchQuery("serial_no", query);
+				//.fuzziness(Fuzziness.AUTO);
+
+		Query searchQuery = new NativeSearchQueryBuilder()
+				                .withFilter(queryBuilder)
+				                .build();
+		
+				
+		// 2. Execute search
+				SearchHits<Employee> productHits = 
+						elasticsearchOperations
+						.search(searchQuery, Employee.class,
+						IndexCoordinates.of(EMP_INDEX));
+
+				// 3. Map searchHits to product list
+				List<Employee> productMatches = new ArrayList<Employee>();
+				productHits.forEach(srchHit->{
+					productMatches.add(srchHit.getContent());					
+				});
+				return productMatches;
+		
+	}
+	
+	
 	public List<ResultAggregator> processSearchNew(final String query) {
 		
 	//	findByStore(query);

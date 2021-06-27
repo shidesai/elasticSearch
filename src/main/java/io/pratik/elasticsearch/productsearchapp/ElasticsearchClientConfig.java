@@ -31,7 +31,9 @@ public class ElasticsearchClientConfig extends AbstractElasticsearchConfiguratio
 				ClientConfiguration
 				.builder()
 				.connectedTo("localhost:9200")
-				.withBasicAuth("elastic", "elastic")
+				//.withBasicAuth("elastic", "elastic")
+				.withConnectTimeout(60000)
+                .withSocketTimeout(60000)
 				.build();
 
 		return RestClients

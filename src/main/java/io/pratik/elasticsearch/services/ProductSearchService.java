@@ -156,7 +156,7 @@ public class ProductSearchService {
 		Query searchQuery = new NativeSearchQueryBuilder()
 				                .withFilter(queryBuilder)
 				                .build();
-		// CReate a search Source
+		
 				
 		// 2. Execute search
 				SearchHits<Store> productHits = 

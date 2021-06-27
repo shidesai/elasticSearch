@@ -174,6 +174,8 @@ public class ProductSearchService {
 	}
 	
 	public List<ResultAggregator> processSearchNew(final String query) {
+		
+	//	findByStore(query);
 		log.info("Search with query {}", query);
 		
 		// 1. Create query on multiple fields enabling fuzzy search

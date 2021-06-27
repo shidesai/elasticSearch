@@ -50,7 +50,7 @@
           var stores=[];
           var employees=[];
           if(inputText.length == 0) {
-             alert("Enter  name or description");
+             alert("Enter something");
           }else{
              var response = '';
 	         $.ajax({
@@ -63,7 +63,7 @@
 					var storesHtml = "";      
 					var employeesHtml = "";      
                     if(len == 0) {
-                      $("#results").html("<p class='text-danger'>Zero matches</p>");
+                      $("#results").html("<p class='text-danger'>No Results Found. Do you want to try something else?</p>");
                     }else{
                        strHTML = "<p class='text-success'>"+len + " matches found.</p>";
                       // strHTML += "<ul class='list-unstyled'>";
@@ -72,10 +72,10 @@
 	                      skuHtml += "<li>"+resp[i].sku_id+" "+resp[i].sku_description+"</li>";
 	                      skus.push(skuHtml);
 	                      }  
-	                      else if (resp[i].first_name!=null && resp[i].first_name.toLowerCase() == "store"){
-		alert('store'+resp[i].store);
+	                      else if (resp[i].store!=null ){
+							//alert('store'+resp[i].store);
 	                      	var docId=resp[i].store;
-	                         storesHtml += "<li><a href=\"javascript:storeDetails('"+docId+"');\">"+resp[i].full_name+" ,"+resp[i].city+","+resp[i].state_province+" <b>Store email:</b> "+resp[i].email_address+"</a></li>";
+	                         storesHtml += "<li><a href=\"javascript:storeDetails('"+docId+"');\">"+resp[i].store_name+" ,"+resp[i].city+","+resp[i].state+"</li>";
 	                       //  storesHtml += "<li>"+resp[i].full_name+"</li>";
 	                          stores.push(storesHtml);
 	                        
@@ -107,14 +107,15 @@
 					  }
                       // strHTML = strHTML + "</ul>";
                       var finalHTML=strHTML;
-                      if(skusHeader!=null){
-							finalHTML+=skusHeader;
+                      						
+						if(employeesHeader!=null){
+							finalHTML+=employeesHeader;
 						}
 						if(storesHeader!=null){
 							finalHTML+=storesHeader;
 						}
-						if(employeesHeader!=null){
-							finalHTML+=employeesHeader;
+						if(skusHeader!=null){
+							finalHTML+=skusHeader;
 						}
                        $("#results").html(finalHTML)
                     }
@@ -125,8 +126,8 @@
     });
     
     function storeDetails(respId){
-	alert('hello2');
-	alert('hello'+respId);
+	//alert('hello2');
+	//alert('hello'+respId);
 	/*$.ajax({
 	            type: "GET",
 	            url: "http://localhost:8080/searchResultStore?q="+respId,

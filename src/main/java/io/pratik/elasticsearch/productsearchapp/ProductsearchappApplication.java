@@ -238,7 +238,8 @@ public class ProductsearchappApplication {
 				String brand = rowScanner.next();
 				String subclass = rowScanner.next();	
 				String category = rowScanner.next();
-				String atgSkuId = rowScanner.next();	
+				String atgSkuId = rowScanner.next();
+				String url = rowScanner.next();
 				return Optional.of(
 						Sku.builder()						
 						.description(description)
@@ -246,6 +247,7 @@ public class ProductsearchappApplication {
 						.brand(brand)
 						.subclass(subclass).category(category)
 						.atgSkuId(atgSkuId)
+						.url(url)
 						.build());
 
 			}

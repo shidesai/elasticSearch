@@ -37,6 +37,10 @@ public class Sku {
 	
 	@Field(type = FieldType.Text, name = "jda_sku_id")
 	private String atgSkuId;
+	
+	@Field(type = FieldType.Text, name = "url")
+	private String url;
+
 
 
 	

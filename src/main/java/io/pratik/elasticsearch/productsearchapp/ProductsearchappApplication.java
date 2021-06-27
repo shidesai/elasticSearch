@@ -22,9 +22,11 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import io.pratik.elasticsearch.models.Employee;
 import io.pratik.elasticsearch.models.Product;
 import io.pratik.elasticsearch.models.Sku;
+import io.pratik.elasticsearch.models.Store;
 import io.pratik.elasticsearch.repositories.EmployeeRepository;
 import io.pratik.elasticsearch.repositories.ProductRepository;
 import io.pratik.elasticsearch.repositories.SkuRepository;
+import io.pratik.elasticsearch.repositories.StoreInfoRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
@@ -46,6 +48,8 @@ public class ProductsearchappApplication {
 	
 	@Autowired
 	private EmployeeRepository empRepo;
+	
+	@Autowired StoreInfoRepository storeRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProductsearchappApplication.class, args);
@@ -56,6 +60,7 @@ public class ProductsearchappApplication {
 		esOps.indexOps(Product.class).delete();
 		esOps.indexOps(Sku.class).delete();
 		esOps.indexOps(Employee.class).delete();
+		esOps.indexOps(Store.class).delete();
 	}
 	
 	
@@ -65,17 +70,20 @@ public class ProductsearchappApplication {
 		esOps.indexOps(Product.class).refresh();
 		esOps.indexOps(Sku.class).refresh();
 		esOps.indexOps(Employee.class).refresh();
+		esOps.indexOps(Store.class).refresh();
 		productRepo.deleteAll();
 		productRepo.saveAll(prepareDataset());
 		skuRepo.deleteAll();
 		skuRepo.saveAll(prepareSkuDataset());
 		empRepo.deleteAll();
 		empRepo.saveAll(prepareEmpDataset());
+		storeRepo.deleteAll();
+		storeRepo.saveAll(prepareStoreDataset());
 	}
 	
 	private Collection<Sku> prepareSkuDataset(){
 
-		Resource resource = new ClassPathResource("sku_info.csv");
+		Resource resource = new ClassPathResource("sku_info_new.csv");
 		List<Sku> skuList = new ArrayList<Sku>();
 
 		try (
@@ -98,9 +106,36 @@ public class ProductsearchappApplication {
 	
 		
 	}
+	
+	
+	private Collection<Store> prepareStoreDataset(){
+
+		Resource resource = new ClassPathResource("store_info_new.csv");
+		List<Store> skuList = new ArrayList<Store>();
+
+		try (
+			InputStream input = resource.getInputStream();
+			Scanner scanner = new Scanner(resource.getInputStream());) {
+			int lineNo = 0;
+			while (scanner.hasNextLine()) {
+				++lineNo;				
+				String line = scanner.nextLine();
+				if(lineNo == 1) continue;
+				Optional<Store> store = 
+						csvRowToStoreMapper(line);
+				if(store.isPresent())
+					skuList.add(store.get());
+			}
+		} catch (Exception e) {
+			log.error("File read error {}",e);;
+		}
+		return skuList;
+	
+		
+	}
 
 	private Collection<Product> prepareDataset() {
-		Resource resource = new ClassPathResource("fashion-products.csv");
+		Resource resource = new ClassPathResource("fashion-products_new.csv");
 		List<Product> productList = new ArrayList<Product>();
 
 		try (
@@ -164,18 +199,51 @@ public class ProductsearchappApplication {
 		}
 		return Optional.of(null);
 	}
-	
+	//REGION,DM,DISTRICT,STORE,STORE_NAME,STREET_ADDRESS,CITY,STATE,ZIP_CODE,PHONE,FAX,HOURS
+	private Optional<Store> csvRowToStoreMapper(final String line) {
+		try (			
+			Scanner rowScanner = new Scanner(line)) {
+			rowScanner.useDelimiter(COMMA_DELIMITER);
+			while (rowScanner.hasNext()) {
+				String region = rowScanner.next();
+				String dm = rowScanner.next();
+				String district = rowScanner.next();
+				String store = rowScanner.next();
+				String store_name = rowScanner.next();
+				String street_address = rowScanner.next();
+				String city = rowScanner.next();
+				String state = rowScanner.next();
+				String zip_code = rowScanner.next();
+				String phone = rowScanner.next();
+				String fax = rowScanner.next();
+				String hours = rowScanner.next();
+				
+				return Optional.of(
+						Store.builder()
+						.region(region).dm(dm).district(district).store(store).store_name(store_name).street_address(street_address).city(city).state(state).zip_code(zip_code).phone(phone).fax(fax).hours(hours)
+						.build());
+
+			}
+		}
+		return Optional.of(null);
+	}
+	//BRAND,SUBCLASS,CATEGORY
 	private Optional<Sku> csvRowToSkuMapper(final String line) {
 		try (			
 			Scanner rowScanner = new Scanner(line)) {
 			rowScanner.useDelimiter(COMMA_DELIMITER);
 			while (rowScanner.hasNext()) {
 				String skuId = rowScanner.next();
-				String description = rowScanner.next();				
+				String description = rowScanner.next();	
+				String brand = rowScanner.next();
+				String subclass = rowScanner.next();	
+				String category = rowScanner.next();	
 				return Optional.of(
 						Sku.builder()						
 						.description(description)
 						.skuId(skuId)
+						.brand(brand)
+						.subclass(subclass).category(category)
 						.build());
 
 			}

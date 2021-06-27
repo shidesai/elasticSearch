@@ -10,6 +10,8 @@ import io.pratik.elasticsearch.models.Employee;
 public interface EmployeeRepository extends ElasticsearchRepository<Employee, String> {
 	 List<Employee> findByFirstName(String name);
 	 List<Employee> findByEmailAddress(String name);
-	 List<Employee> findByEmailAddressAndFirstName(String name); 
+	 List<Employee> findByEmailAddressAndFirstName(String name);
+	 List<Employee> findByFullName(String name);
+
 
 }

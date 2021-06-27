@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.pratik.elasticsearch.models.Product;
 import io.pratik.elasticsearch.models.ResultAggregator;
 import io.pratik.elasticsearch.models.Sku;
+import io.pratik.elasticsearch.models.Store;
 import io.pratik.elasticsearch.services.ProductSearchService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,5 +56,14 @@ public class SearchController {
         log.info("suggests {}",suggests);
         return suggests;
 	  }
+	
+	@GetMapping("/store")
+    @ResponseBody
+    public List<Store> fetchStores(@RequestParam(value = "q", required = false) String query) {                        
+        log.info("fetch suggests {}",query);
+        List<Store> suggests = searchService.findByStore(query);
+        log.info("suggests {}",suggests);
+        return suggests;
+      }
 
 }

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Document(indexName = "skuindex")
 public class Sku {
-	
+	//SKU_ID,SKU_DESCRIPTION,BRAND,SUBCLASS,CATEGORY
 	@Id
     private String id;
 	
@@ -25,5 +25,16 @@ public class Sku {
 	
 	@Field(type = FieldType.Text, name = "sku_description")
 	private String description;
+	
+	@Field(type = FieldType.Text, name = "brand")
+	private String brand;
+
+	@Field(type = FieldType.Text, name = "subclass")
+	private String subclass;
+
+	@Field(type = FieldType.Text, name = "category")
+	private String category;
+
+	
 
 }

@@ -83,7 +83,7 @@ public class ProductsearchappApplication {
 	
 	private Collection<Sku> prepareSkuDataset(){
 
-		Resource resource = new ClassPathResource("sku_info.csv");
+		Resource resource = new ClassPathResource("sku_info_new.csv");
 		List<Sku> skuList = new ArrayList<Sku>();
 
 		try (
@@ -227,18 +227,23 @@ public class ProductsearchappApplication {
 		}
 		return Optional.of(null);
 	}
-	
+	//BRAND,SUBCLASS,CATEGORY
 	private Optional<Sku> csvRowToSkuMapper(final String line) {
 		try (			
 			Scanner rowScanner = new Scanner(line)) {
 			rowScanner.useDelimiter(COMMA_DELIMITER);
 			while (rowScanner.hasNext()) {
 				String skuId = rowScanner.next();
-				String description = rowScanner.next();				
+				String description = rowScanner.next();	
+				String brand = rowScanner.next();
+				String subclass = rowScanner.next();	
+				String category = rowScanner.next();	
 				return Optional.of(
 						Sku.builder()						
 						.description(description)
 						.skuId(skuId)
+						.brand(brand)
+						.subclass(subclass).category(category)
 						.build());
 
 			}

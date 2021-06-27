@@ -20,30 +20,30 @@ public class Store {
 	@Id
     private String id;
 	
-	@Field(type = FieldType.Text, name = "region")
+	@Field(type = FieldType.Keyword, name = "region")
 	private String region;
-	@Field(type = FieldType.Text, name = "dm")
+	@Field(type = FieldType.Keyword, name = "dm")
 	private String dm;	
-	@Field(type = FieldType.Text, name = "district")
+	@Field(type = FieldType.Keyword, name = "district")
 	private String district;
 	
-	@Field(type = FieldType.Text, name = "store")
+	@Field(type = FieldType.Keyword, name = "store")
 	private String store;
-	@Field(type = FieldType.Text, name = "store_name")
+	@Field(type = FieldType.Keyword, name = "store_name")
 	private String store_name;
-	@Field(type = FieldType.Text, name = "street_address")
+	@Field(type = FieldType.Keyword, name = "street_address")
 	private String street_address;
-	@Field(type = FieldType.Text, name = "city")
+	@Field(type = FieldType.Keyword, name = "city")
 	private String city;
-	@Field(type = FieldType.Text, name = "state")
+	@Field(type = FieldType.Keyword, name = "state")
 	private String state;
-	@Field(type = FieldType.Text, name = "zip_code")
+	@Field(type = FieldType.Keyword, name = "zip_code")
 	private String zip_code;
-	@Field(type = FieldType.Text, name = "phone")
+	@Field(type = FieldType.Keyword, name = "phone")
 	private String phone;	
-	@Field(type = FieldType.Text, name = "hours")
+	@Field(type = FieldType.Keyword, name = "hours")
 	private String hours;
-	@Field(type = FieldType.Text, name = "fax")
+	@Field(type = FieldType.Keyword, name = "fax")
 	private String fax;
 
 

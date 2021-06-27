@@ -135,7 +135,7 @@ public class ProductsearchappApplication {
 	}
 
 	private Collection<Product> prepareDataset() {
-		Resource resource = new ClassPathResource("fashion-products.csv");
+		Resource resource = new ClassPathResource("fashion-products_new.csv");
 		List<Product> productList = new ArrayList<Product>();
 
 		try (
@@ -220,7 +220,7 @@ public class ProductsearchappApplication {
 				
 				return Optional.of(
 						Store.builder()
-						.region(region).dm(dm).district(district).store(store_name).store_name(store_name).street_address(street_address).city(city).state(state).zip_code(zip_code).phone(phone).fax(fax).hours(hours)
+						.region(region).dm(dm).district(district).store(store).store_name(store_name).street_address(street_address).city(city).state(state).zip_code(zip_code).phone(phone).fax(fax).hours(hours)
 						.build());
 
 			}

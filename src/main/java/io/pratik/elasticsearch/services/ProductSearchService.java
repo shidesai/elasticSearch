@@ -28,9 +28,11 @@ import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.data.elasticsearch.core.query.StringQuery;
 import org.springframework.stereotype.Service;
 
+import io.pratik.elasticsearch.models.Employee;
 import io.pratik.elasticsearch.models.Product;
 import io.pratik.elasticsearch.models.ResultAggregator;
 import io.pratik.elasticsearch.models.Sku;
+import io.pratik.elasticsearch.models.Store;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -150,7 +152,7 @@ public class ProductSearchService {
 		// 1. Create query on multiple fields enabling fuzzy search
 		QueryBuilder queryBuilder = 
 				QueryBuilders
-				.multiMatchQuery(query,"sku_id","sku_description","name","first_name","email_address","store");
+				.multiMatchQuery(query,"sku_id","sku_description","name","full_name","email_address","store","state","dm");
 				//.fuzziness(Fuzziness.AUTO);
 
 		Query searchQuery = new NativeSearchQueryBuilder().withFilter(queryBuilder).build();
@@ -175,24 +177,56 @@ public class ProductSearchService {
 
 	
 	public List<String> fetchSuggestions(String query) {
+		
+		List<String> suggestions = new ArrayList<String>();
+		
 		QueryBuilder queryBuilder = QueryBuilders
-				.wildcardQuery("name", query+"*");
+				.wildcardQuery("sku_description", query+"*").caseInsensitive(true);
 
 		Query searchQuery = new NativeSearchQueryBuilder()
 				.withFilter(queryBuilder)
 				.withPageable(PageRequest.of(0, 5))
 				.build();
 
-		SearchHits<Product> searchSuggestions = 
+		SearchHits<Sku> searchSuggestions = 
 				elasticsearchOperations.search(searchQuery, 
-						Product.class,
-				IndexCoordinates.of(PRODUCT_INDEX));
-		
-		List<String> suggestions = new ArrayList<String>();
+						Sku.class,
+				IndexCoordinates.of(SKU_INDEX));
+				
 		
 		searchSuggestions.getSearchHits().forEach(searchHit->{
-			suggestions.add(searchHit.getContent().getName());
+			suggestions.add(searchHit.getContent().getDescription());
 		});
+		
+		QueryBuilder queryBuilder_emp = QueryBuilders
+				.wildcardQuery("full_name", query+"*").caseInsensitive(true);
+
+		Query searchQuery_emp = new NativeSearchQueryBuilder()
+				.withFilter(queryBuilder_emp)
+				.withPageable(PageRequest.of(0, 5))
+				.build();
+
+		SearchHits<Employee> searchSuggestions_emp = 
+				elasticsearchOperations.search(searchQuery_emp, 
+						Employee.class,
+				IndexCoordinates.of(EMP_INDEX));
+		searchSuggestions_emp.getSearchHits().forEach(searchHit->{
+			suggestions.add(searchHit.getContent().getFullName());
+		});
+		
+		QueryBuilder queryBuilder_str = QueryBuilders
+				.wildcardQuery("state", query+"*").caseInsensitive(true);
+
+		Query searchQuery_str = new NativeSearchQueryBuilder()
+				.withFilter(queryBuilder_str)
+				.withPageable(PageRequest.of(0, 5))
+				.build();
+
+		SearchHits<Store> searchSug_store = elasticsearchOperations.search(searchQuery_str, Store.class,IndexCoordinates.of(STORE_INDEX));
+		searchSug_store.getSearchHits().forEach(searchHit->{
+			suggestions.add(searchHit.getContent().getStore());
+		});
+		
 		return suggestions;
 	}
 	

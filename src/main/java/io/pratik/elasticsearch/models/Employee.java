@@ -21,49 +21,49 @@ public class Employee {
 	@Id
     private String id;
 	
-	@Field(type = FieldType.Text, name = "serial_no")
+	@Field(type = FieldType.Keyword, name = "serial_no")
 	private String serialNo;
 	
-	@Field(type = FieldType.Text, name = "first_name")
+	@Field(type = FieldType.Keyword, name = "first_name")
 	private String firstName;
 	
-	@Field(type = FieldType.Text, name = "last_name")
+	@Field(type = FieldType.Keyword, name = "last_name")
 	private String lastName;
 	
-	@Field(type = FieldType.Text, name = "full_name")
+	@Field(type = FieldType.Keyword, name = "full_name")
 	private String fullName;
 	
-	@Field(type = FieldType.Text, name = "title")
+	@Field(type = FieldType.Keyword, name = "title")
 	private String title;
 	
-	@Field(type = FieldType.Text, name = "department")
+	@Field(type = FieldType.Keyword, name = "department")
 	private String department;
 	
 	@Field(type = FieldType.Text, name = "description")
 	private String description;
 	
-	@Field(type = FieldType.Text, name = "manager")
+	@Field(type = FieldType.Keyword, name = "manager")
 	private String manager;
 	
-	@Field(type = FieldType.Text, name = "role")
+	@Field(type = FieldType.Keyword, name = "role")
 	private String role;
 	
-	@Field(type = FieldType.Text, name = "email_address")
+	@Field(type = FieldType.Keyword, name = "email_address")
 	private String emailAddress;
 	
-	@Field(type = FieldType.Text, name = "office")
+	@Field(type = FieldType.Keyword, name = "office")
 	private String office;
 	
-	@Field(type = FieldType.Text, name = "city")
+	@Field(type = FieldType.Keyword, name = "city")
 	private String city;
 	
-	@Field(type = FieldType.Text, name = "zip_code")
+	@Field(type = FieldType.Keyword, name = "zip_code")
 	private String zipCode;
 	
-	@Field(type = FieldType.Text, name = "state_province")
+	@Field(type = FieldType.Keyword, name = "state_province")
 	private String stateProvince;
 	
-	@Field(type = FieldType.Text, name = "telephone_number")
+	@Field(type = FieldType.Keyword, name = "telephone_number")
 	private String telephoneNumber;
 	
 }

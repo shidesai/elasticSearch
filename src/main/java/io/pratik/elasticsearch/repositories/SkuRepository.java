@@ -10,5 +10,6 @@ public interface SkuRepository extends ElasticsearchRepository<Sku, String> {
 	
 	List<Sku> findBySkuIdAndDescription(String skuId,String description);
 	List<Sku> findBySkuId(String skuId);
+	List<Sku> findByDescription(String skuId);
 
 }

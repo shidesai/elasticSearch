@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.pratik.elasticsearch.models.Employee;
 import io.pratik.elasticsearch.models.Product;
 import io.pratik.elasticsearch.models.ResultAggregator;
 import io.pratik.elasticsearch.models.Sku;
@@ -65,5 +66,15 @@ public class SearchController {
         log.info("suggests {}",suggests);
         return suggests;
       }
+	
+	@GetMapping("/employee")
+    @ResponseBody
+    public List<Employee> fetchEmployee(@RequestParam(value = "q", required = false) String query) {                        
+        log.info("fetch suggests {}",query);
+        List<Employee> suggests = searchService.findByEmployee(query);
+        log.info("suggests {}",suggests);
+        return suggests;
+      }
+
 
 }

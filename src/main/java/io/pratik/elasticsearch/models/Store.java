@@ -27,7 +27,7 @@ public class Store {
 	@Field(type = FieldType.Keyword, name = "district")
 	private String district;
 	
-	@Field(type = FieldType.Keyword, name = "store")
+	@Field(type = FieldType.Text, name = "store")
 	private String store;
 	@Field(type = FieldType.Keyword, name = "store_name")
 	private String store_name;

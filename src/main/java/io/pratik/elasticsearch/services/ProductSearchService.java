@@ -209,6 +209,7 @@ public class ProductSearchService {
 		log.info("Search with query {}", query);
 		
 		// 1. Create query on multiple fields enabling fuzzy search
+		
 		QueryBuilder queryBuilder = 
 				QueryBuilders
 				.multiMatchQuery(query,"jda_sku_id","sku_id","sku_description","name","full_name","email_address","store","state","dm","brand","subclass","category","title","zip_code","first_name","last_name","description","city","title","department","telephone_number");
@@ -270,8 +271,7 @@ public class ProductSearchService {
 						Employee.class,
 				IndexCoordinates.of(EMP_INDEX));
 		searchSuggestions_emp.getSearchHits().forEach(searchHit->{
-			suggestions.add(searchHit.getContent().getFullName());
-			suggestions.add(searchHit.getContent().getEmailAddress());
+			suggestions.add(searchHit.getContent().getFullName());			
 		});
 		
 		QueryBuilder queryBuilder_str = QueryBuilders

@@ -75,7 +75,9 @@
 	                      }  
 	                      else if (resp[i].store!=null ){
 							//alert('store'+resp[i].store);
-	                      	var docId=resp[i].store;
+							var storeName=resp[i].store.split(' ');
+	                      	var docId=storeName[1];
+	                      	
 	                         storesHtml += "<li><a href=\"javascript:storeDetails('"+docId+"');\">"+resp[i].store_name+" ,"+resp[i].city+","+resp[i].state+"</li>";
 	                       //  storesHtml += "<li>"+resp[i].full_name+"</li>";
 	                          stores.push(storesHtml);

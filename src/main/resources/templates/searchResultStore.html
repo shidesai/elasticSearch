@@ -54,7 +54,7 @@ function getUrlVars()
 	            async: true,
 	            success: function(resp) {
 	                var len = resp.length;
-	                var strHdrHTML="<p class=\"text-info\"><h2>Store "+resp[0].store+"- "+resp[0].store_name+"</h2></p>";
+	                var strHdrHTML="<p class=\"text-info\"><h2>"+resp[0].store+"- "+resp[0].store_name+"</h2></p>";
 	                var storeaddr1html = "<b>Store Address: </b>"+resp[0].street_address+"<p>"+resp[0].city+", "+resp[0].state+", "+resp[0].zip_code+"</p>";
 	                var storeaddr2html = "<b>Region: </b>"+resp[0].region+"<p><b>District Manager: </b>"+resp[0].dm+"</p><p><b>District: </b>"
 	                					+resp[0].district+"</p><p><b>Phone: </b>"+resp[0].phone+"</p><p><b>Store Hours: </b>"+resp[0].hours
